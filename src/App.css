@@ -1,0 +1,12 @@
+body {
+  background: #b9b9b9;
+}
+
+.App {
+  padding: 30px;
+  display: flex;
+}
+
+.App > div {
+  margin-right: 50px;
+}
