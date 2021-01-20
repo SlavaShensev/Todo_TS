@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {FilterValuesType, TaskType} from "./App";
 
 type ListTypeProps = {
@@ -6,16 +6,34 @@ type ListTypeProps = {
     tasks: Array<TaskType>
     removeTask: (taskId: string) => void
     changeFilter: (value: FilterValuesType) => void
+    addTask: (title: string) => void
 }
 
 function TodoList(props: ListTypeProps) {
+    const [title, setTitle] = useState('')
+    const addTask = () => {
+        props.addTask(title)
+        setTitle('')
+
+    }
     return (
         <div className="List">
             <div>
                 <h3>{props.title}</h3>
                 <div>
-                    <input/>
-                    <button>+</button>
+                    <input value={title}
+                           onChange={(e) => {
+                               setTitle(e.currentTarget.value)
+                           }}
+                           onKeyPress={(e) => {
+                               if (e.charCode === 13) {
+                                   addTask()
+                               }
+                           }}
+                    />
+                    <button onClick={addTask}
+                    >+
+                    </button>
                 </div>
                 <ul>
                     {
@@ -32,13 +50,16 @@ function TodoList(props: ListTypeProps) {
                 <div>
                     <button onClick={() => {
                         props.changeFilter('all')
-                    }}>All</button>
+                    }}>All
+                    </button>
                     <button onClick={() => {
                         props.changeFilter('active')
-                    }}>Active</button>
+                    }}>Active
+                    </button>
                     <button onClick={() => {
                         props.changeFilter('completed')
-                    }}>Completed</button>
+                    }}>Completed
+                    </button>
                 </div>
             </div>
         </div>
