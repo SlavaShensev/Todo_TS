@@ -3,9 +3,7 @@ import './App.css';
 import TodoList from './TodoList'
 import { v1 } from 'uuid';
 
-
 export type FilterValuesType = 'all' | 'active' | 'completed'
-
 export type TaskType = {
     id: string
     title: string
@@ -21,11 +19,6 @@ function App() {
         {id: v1(), title: 'GraphQL', isDone: false},
     ])
 
-    function removeTask(id: string) {
-        let filteredTasks = tasks.filter(t => t.id != id)
-        setTasks(filteredTasks)
-    }
-
     let [filter, setFilter] = useState<FilterValuesType>('all')
 
     let tasksForTodoList = tasks
@@ -38,15 +31,27 @@ function App() {
         tasksForTodoList = tasks.filter(t => t.isDone === true)
     }
 
+    function removeTask(id: string) {
+        let filteredTasks = tasks.filter(t => t.id !== id)
+        setTasks(filteredTasks)
+    }
+
     function changeFilter(value: FilterValuesType) {
         setFilter(value)
     }
 
-    function addTask() {
-        const task = {id: v1(), title: 'NEW TASK', isDone: false}
+    function addTask(value: string) {
+        const task = {id: v1(), title: value, isDone: false}
         let newTasks= [task, ...tasks]
         setTasks(newTasks)
-
+    }
+    
+    function changStatus(id: string, isDone: boolean) {
+        let task = tasks.find(t=>t.id === id)
+        if (task) {
+            task.isDone = isDone
+            setTasks([...tasks])
+        }
     }
 
     return (
@@ -56,6 +61,7 @@ function App() {
                       removeTask={removeTask}
                       changeFilter={changeFilter}
                       addTask={addTask}
+                      changStatus={changStatus}
             />
         </div>
     );
