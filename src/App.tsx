@@ -1,26 +1,62 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
+import TodoList from './TodoList'
+import { v1 } from 'uuid';
+
+
+export type FilterValuesType = 'all' | 'active' | 'completed'
+
+export type TaskType = {
+    id: string
+    title: string
+    isDone: boolean
+}
 
 function App() {
+    let [tasks, setTasks] = useState([
+        {id: v1(), title: 'JS', isDone: true},
+        {id: v1(), title: 'CSS', isDone: true},
+        {id: v1(), title: 'React', isDone: false},
+        {id: v1(), title: 'Rest API', isDone: false},
+        {id: v1(), title: 'GraphQL', isDone: false},
+    ])
+
+    function removeTask(id: string) {
+        let filteredTasks = tasks.filter(t => t.id != id)
+        setTasks(filteredTasks)
+    }
+
+    let [filter, setFilter] = useState<FilterValuesType>('all')
+
+    let tasksForTodoList = tasks
+
+    if (filter === 'active') {
+        tasksForTodoList = tasks.filter(t => t.isDone === false)
+    }
+
+    if (filter === 'completed') {
+        tasksForTodoList = tasks.filter(t => t.isDone === true)
+    }
+
+    function changeFilter(value: FilterValuesType) {
+        setFilter(value)
+    }
+
+    function addTask() {
+        const task = {id: v1(), title: 'NEW TASK', isDone: false}
+        let newTasks= [task, ...tasks]
+        setTasks(newTasks)
+
+    }
+
     return (
-        <div className="App">
-            <div>
-                <h3>What to learn</h3>
-                <div>
-                    <input/>
-                    <button>+</button>
-                </div>
-                <ul>
-                    <li><input type="checkbox" checked={true}/> <span>HTML&CSS</span></li>
-                    <li><input type="checkbox" checked={true}/> <span>JS</span></li>
-                    <li><input type="checkbox" checked={false}/> <span>React</span></li>
-                </ul>
-                <div>
-                    <button>All</button>
-                    <button>Active</button>
-                    <button>Completed</button>
-                </div>
-            </div>
+        <div className='App'>
+            <TodoList title='What to learn'
+                      tasks={tasksForTodoList}
+                      removeTask={removeTask}
+                      changeFilter={changeFilter}
+                      addTask={addTask}
+            />
         </div>
     );
 }
