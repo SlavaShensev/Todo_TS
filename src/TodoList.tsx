@@ -12,11 +12,14 @@ type ListTypeProps = {
 
 function TodoList(props: ListTypeProps) {
     let [title, setTitle] = useState('')
+   let [error, setError] = useState<string | null>(null)
 
     const addTask = () => {
         if (title.trim() !== '') {
             props.addTask(title)
             setTitle('')
+        } else {
+            setError('Title is required')
         }
     }
 
@@ -30,12 +33,17 @@ function TodoList(props: ListTypeProps) {
                                setTitle(e.currentTarget.value)
                            }}
                            onKeyPress={e => {
+                               setError(null)
                                if(e.charCode === 13) {
                                    addTask()
                                }
                            }}
+                           className={error ? 'error' : ''}
                     />
                     <button onClick={addTask}>+</button>
+
+                    {error && <div className={'error_message'}>{error}</div>}
+
                 </div>
                 <ul>
                     {
