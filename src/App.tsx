@@ -20,7 +20,7 @@ function App() {
     ])
 
     let [filter, setFilter] = useState<FilterValuesType>('all')
-
+console.log(filter)
     let tasksForTodoList = tasks
 
     if (filter === 'active') {
@@ -62,6 +62,7 @@ function App() {
                       changeFilter={changeFilter}
                       addTask={addTask}
                       changStatus={changStatus}
+                      filter={filter}
             />
         </div>
     );
