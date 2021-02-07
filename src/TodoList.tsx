@@ -6,12 +6,10 @@ type ListTypeProps = {
     title: string
     tasks: Array<TaskType>
     filter: FilterValuesType
-    removeTask: (taskId: string) => void
+    removeTask: (taskId: string, todoListId: string) => void
     changeFilter: (value: FilterValuesType, todoListId: string) => void
-    addTask: (value: string) => void
-    changStatus: (id: string, isDone: boolean) => void
-
-
+    addTask: (value: string, todoListId: string) => void
+    changStatus: (id: string, isDone: boolean, todoListId: string) => void
 }
 
 function TodoList(props: ListTypeProps) {
@@ -20,14 +18,12 @@ function TodoList(props: ListTypeProps) {
 
     const addTask = () => {
         if (title.trim() !== '') {
-            props.addTask(title)
+            props.addTask(title, props.id)
             setTitle('')
         } else {
             setError('Title is required')
         }
     }
-
-
 
     return (
         <div className="List">
@@ -58,12 +54,12 @@ function TodoList(props: ListTypeProps) {
                                    checked={t.isDone}
                                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                        const newIsDoneValue = e.currentTarget.checked
-                                       props.changStatus(t.id, newIsDoneValue)
+                                       props.changStatus(t.id, newIsDoneValue,props.id)
                                    }}
                             />
                             <span>{t.title}</span>
                             <button onClick={() => {
-                                props.removeTask(t.id)
+                                props.removeTask(t.id, props.id)
                             }}>x
                             </button>
                         </li>)
