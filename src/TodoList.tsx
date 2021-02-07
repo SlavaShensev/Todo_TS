@@ -2,13 +2,16 @@ import React, {ChangeEvent, useState} from "react";
 import {FilterValuesType, TaskType} from "./App";
 
 type ListTypeProps = {
+    id: string
     title: string
     tasks: Array<TaskType>
+    filter: string
     removeTask: (taskId: string) => void
     changeFilter: (value: FilterValuesType) => void
     addTask: (value: string) => void
     changStatus: (id: string, isDone: boolean) => void
-    filter: string
+
+
 }
 
 function TodoList(props: ListTypeProps) {
