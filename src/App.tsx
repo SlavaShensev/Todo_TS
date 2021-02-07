@@ -46,8 +46,16 @@ function App() {
         }
     }
 
+    function removeTodoList(todoListId: string) {
+        let filteredTodoList = todoLists.filter(tl=> tl.id !== todoListId)
+        setTodoList(filteredTodoList)
+        delete tasksObj[todoListId]
+        setTasks({...tasksObj})
+    }
+    
     function removeTask(id: string, todoListId: string) {
         let tasks = tasksObj[todoListId]
+        debugger
         let filteredTasks = tasks.filter(t => t.id !== id)
         tasksObj[todoListId] = filteredTasks
         setTasks({...tasksObj})
@@ -90,6 +98,7 @@ function App() {
                                      addTask={addTask}
                                      changStatus={changStatus}
                                      filter={tl.filter}
+                                     removeTodoList={removeTodoList}
                     />
                 })
             }

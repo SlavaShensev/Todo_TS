@@ -10,6 +10,7 @@ type ListTypeProps = {
     changeFilter: (value: FilterValuesType, todoListId: string) => void
     addTask: (value: string, todoListId: string) => void
     changStatus: (id: string, isDone: boolean, todoListId: string) => void
+    removeTodoList: (todoListId: string) => void
 }
 
 function TodoList(props: ListTypeProps) {
@@ -28,7 +29,11 @@ function TodoList(props: ListTypeProps) {
     return (
         <div className="List">
             <div>
-                <h3>{props.title}</h3>
+                <h3>{props.title}
+                    <button onClick={()=> {
+                        props.removeTodoList(props.id)
+                    }}> x </button>
+                </h3>
                 <div>
                     <input value={title}
                            onChange={(e) => {
@@ -54,7 +59,7 @@ function TodoList(props: ListTypeProps) {
                                    checked={t.isDone}
                                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                        const newIsDoneValue = e.currentTarget.checked
-                                       props.changStatus(t.id, newIsDoneValue,props.id)
+                                       props.changStatus(t.id, newIsDoneValue, props.id)
                                    }}
                             />
                             <span>{t.title}</span>
