@@ -48,7 +48,7 @@ function TodoList(props: ListTypeProps) {
                 </div>
                 <ul>
                     {
-                        props.tasks.map(t => <li key={t.id}>
+                        props.tasks.map(t => <li key={t.id} className={t.isDone ? 'is_done' : ''} >
                             <input type={'checkbox'}
                                    checked={t.isDone}
                                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
