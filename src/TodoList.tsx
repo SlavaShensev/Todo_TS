@@ -41,7 +41,7 @@ function TodoList(props: ListTypeProps) {
                            }}
                            onKeyPress={e => {
                                setError(null)
-                               if (e.charCode === 13) {
+                               if (e.key === 'Enter') {
                                    addTask()
                                }
                            }}
