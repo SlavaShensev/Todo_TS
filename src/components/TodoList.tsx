@@ -1,5 +1,6 @@
 import React, {ChangeEvent, useState} from "react";
 import {FilterValuesType, TaskType} from "../App";
+import AddItemForm from "./AddItemForm";
 
 type ListTypeProps = {
     id: string
@@ -15,7 +16,9 @@ type ListTypeProps = {
 
 function TodoList(props: ListTypeProps) {
 
-    
+    const addTask = (title: string)=> {
+        props.addTask(title, props.id)
+    }
 
     const onClickHandler = () => props.removeTodoList(props.id)
     const onClickAllHandler = () => props.changeFilter('all', props.id)
@@ -29,6 +32,7 @@ function TodoList(props: ListTypeProps) {
                         x
                     </button>
                 </h3>
+                <AddItemForm addItem={addTask}/>
                 <ul>
                     {
                         props.tasks.map(t => {
