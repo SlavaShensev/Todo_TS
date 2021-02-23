@@ -47,7 +47,7 @@ function TodoList(props: ListTypeProps) {
                                            props.changStatus(t.id, newIsDoneValue, props.id)
                                        }}
                                 />
-                                <EditableSpan value={t.title} />
+                                <EditableSpan value={t.title}  />
                                 <button onClick={onClickHandler}>x
                                 </button>
                             </li>
