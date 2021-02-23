@@ -1,6 +1,7 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent} from "react";
 import {FilterValuesType, TaskType} from "../App";
 import AddItemForm from "./AddItemForm";
+import EditableSpan from "./EdittableSpan";
 
 type ListTypeProps = {
     id: string
@@ -27,7 +28,8 @@ function TodoList(props: ListTypeProps) {
     return (
         <div className="List">
             <div>
-                <h3>{props.title}
+                <h3>
+                    {props.title}
                     <button onClick={onClickHandler}>
                         x
                     </button>
@@ -45,7 +47,7 @@ function TodoList(props: ListTypeProps) {
                                            props.changStatus(t.id, newIsDoneValue, props.id)
                                        }}
                                 />
-                                <span>{t.title}</span>
+                                <EditableSpan value={t.title} />
                                 <button onClick={onClickHandler}>x
                                 </button>
                             </li>
