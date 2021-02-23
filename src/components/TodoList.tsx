@@ -13,6 +13,7 @@ type ListTypeProps = {
     addTask: (value: string, todoListId: string) => void
     changStatus: (id: string, isDone: boolean, todoListId: string) => void
     removeTodoList: (todoListId: string) => void
+    changeTitleTask: (id: string, title: string, todoListId: string)=>void
 }
 
 function TodoList(props: ListTypeProps) {
@@ -20,6 +21,12 @@ function TodoList(props: ListTypeProps) {
     const addTask = (title: string)=> {
         props.addTask(title, props.id)
     }
+
+
+    const changeTitleTodoList = () => {
+        props.changeTitleTask(props.id,props.title,props.title)
+    }
+
 
     const onClickHandler = () => props.removeTodoList(props.id)
     const onClickAllHandler = () => props.changeFilter('all', props.id)
@@ -29,7 +36,8 @@ function TodoList(props: ListTypeProps) {
         <div className="List">
             <div>
                 <h3>
-                    {props.title}
+                    {props.title}HELLO
+                    <EditableSpan value={props.title} onChange={changeTitleTodoList}/>
                     <button onClick={onClickHandler}>
                         x
                     </button>
@@ -47,7 +55,7 @@ function TodoList(props: ListTypeProps) {
                                            props.changStatus(t.id, newIsDoneValue, props.id)
                                        }}
                                 />
-                                <EditableSpan value={t.title}  />
+                                <EditableSpan value={t.title} onChange={addTask} />
                                 <button onClick={onClickHandler}>x
                                 </button>
                             </li>

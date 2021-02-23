@@ -30,6 +30,7 @@ function AddItemForm(props: AddItemFormType) {
                    onChange={onChangeHandler}
                    onKeyPress={onKeyPressHandler}
                    className={error ? 'error' : ''}
+                   placeholder={'Add task'}
             />
             <button onClick={addItem}>+</button>
             {error && <div className={'error_message'}>{error}</div>}
