@@ -15,17 +15,18 @@ type ListTypeProps = {
     addTask: (value: string, todoListId: string) => void
     changStatus: (id: string, isDone: boolean, todoListId: string) => void
     removeTodoList: (todoListId: string) => void
-    changeTitleTask: (id: string, title: string, todoListId: string) => void
+    changeTitleTodoList: (todoListId: string, title: string) => void
 }
 
 function TodoList(props: ListTypeProps) {
-
     const addTask = (title: string) => {
         props.addTask(title, props.id)
     }
 
-    const changeTitleTodoList = () => {
-        props.changeTitleTask(props.id, props.title, props.title)
+    const changeTitleTodoList = (title: string) => {
+
+        props.changeTitleTodoList(props.id, title)
+
     }
     const onClickHandler = () => props.removeTodoList(props.id)
     const onClickAllHandler = () => props.changeFilter('all', props.id)
@@ -42,6 +43,7 @@ function TodoList(props: ListTypeProps) {
                 </h3>
                 <AddItemForm addItem={addTask}/>
                 <div>
+
                     {
                         props.tasks.map(t => {
                             const onClickHandler = () => props.removeTask(t.id, props.id)
@@ -53,7 +55,6 @@ function TodoList(props: ListTypeProps) {
                                         props.changStatus(t.id, newIsDoneValue, props.id)
                                     }}
                                 />
-
                                 <EditableSpan value={t.title} onChange={addTask}/>
                                 <IconButton onClick={onClickHandler}>
                                     <Delete/>

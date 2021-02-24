@@ -14,6 +14,7 @@ function EditableSpan(props: EdittableSpanTypeProps) {
     }
     const activateEditModeOFF = () => {
         setEditMode(!editMode)
+
         props.onChange(title)
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {

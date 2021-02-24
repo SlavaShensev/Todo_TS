@@ -37,8 +37,8 @@ function App() {
     const todoList2 = v1()
 
     let [todoLists, setTodoList] = useState<Array<TodoListType>>([
-        {id: todoList1, title: 'What to learn', filter: 'active'},
-        {id: todoList2, title: 'What to buy', filter: 'completed',}
+        {id: todoList1, title: 'What to learn', filter: 'all'},
+        {id: todoList2, title: 'What to buy', filter: 'all',}
     ])
 
     let [tasksObj, setTasks] = useState<TaskStateType>({
@@ -79,8 +79,8 @@ function App() {
 
     function addTask(value: string, todoListId: string) {
         const task = {id: v1(), title: value, isDone: false}
-        let tasks = tasksObj[todoListId]
-        let newTasks = [task, ...tasks]
+        const tasks = tasksObj[todoListId]
+        const newTasks = [task, ...tasks]
         tasksObj[todoListId] = newTasks
         setTasks({...tasksObj})
     }
@@ -94,12 +94,11 @@ function App() {
         }
     }
 
-    function changeTitleTask(id: string, title: string, todoListId: string) {
-        const tasks = tasksObj[todoListId]
-        const task = tasks.find(t => t.id === id)
-        if (task) {
-            task.title = title
-            setTasks({...tasksObj})
+    function changeTitleTodoList( todoListId: string, value: string) {
+        const currentTodoList = todoLists.find((listItem) => listItem.id === todoListId)
+        if (currentTodoList) {
+            currentTodoList.title = value
+            setTodoList([...todoLists])
         }
     }
 
@@ -121,10 +120,10 @@ function App() {
         <div className='App'>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton edge="start" color="inherit" aria-label="menu">
+                    <IconButton edge="start" color="inherit" aria-label="Menu">
                         <MenuIcon/>
                     </IconButton>
-                    <Typography variant="h6">
+                    <Typography variant='h5'>
                         News
                     </Typography>
                     <Button color="inherit">Login</Button>
@@ -144,7 +143,7 @@ function App() {
                             if (tl.filter === 'completed') {
                                 tasksForTodoList = tasksForTodoList.filter(t => t.isDone === true)
                             }
-                            return <Grid item>
+                            return <Grid item key={tl.id}>
                                 <Paper style={{padding: '10px'}}>
                                     <TodoList key={tl.id}
                                               id={tl.id}
@@ -156,7 +155,7 @@ function App() {
                                               changStatus={changStatus}
                                               filter={tl.filter}
                                               removeTodoList={removeTodoList}
-                                              changeTitleTask={changeTitleTask}
+                                              changeTitleTodoList={changeTitleTodoList}
                                     />
                                 </Paper>
                             </Grid>
