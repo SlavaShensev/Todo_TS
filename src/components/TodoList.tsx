@@ -2,6 +2,8 @@ import React, {ChangeEvent} from "react";
 import {FilterValuesType, TaskType} from "../App";
 import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EdittableSpan";
+import {IconButton} from "@material-ui/core";
+import {Delete} from "@material-ui/icons";
 
 type ListTypeProps = {
     id: string
@@ -13,21 +15,18 @@ type ListTypeProps = {
     addTask: (value: string, todoListId: string) => void
     changStatus: (id: string, isDone: boolean, todoListId: string) => void
     removeTodoList: (todoListId: string) => void
-    changeTitleTask: (id: string, title: string, todoListId: string)=>void
+    changeTitleTask: (id: string, title: string, todoListId: string) => void
 }
 
 function TodoList(props: ListTypeProps) {
 
-    const addTask = (title: string)=> {
+    const addTask = (title: string) => {
         props.addTask(title, props.id)
     }
 
-
     const changeTitleTodoList = () => {
-        props.changeTitleTask(props.id,props.title,props.title)
+        props.changeTitleTask(props.id, props.title, props.title)
     }
-
-
     const onClickHandler = () => props.removeTodoList(props.id)
     const onClickAllHandler = () => props.changeFilter('all', props.id)
     const onClickActiveHandler = () => props.changeFilter('active', props.id)
@@ -36,11 +35,10 @@ function TodoList(props: ListTypeProps) {
         <div className="List">
             <div>
                 <h3>
-                    {props.title}HELLO
                     <EditableSpan value={props.title} onChange={changeTitleTodoList}/>
-                    <button onClick={onClickHandler}>
-                        x
-                    </button>
+                    <IconButton onClick={onClickHandler}>
+                        <Delete/>
+                    </IconButton>
                 </h3>
                 <AddItemForm addItem={addTask}/>
                 <ul>
@@ -55,9 +53,10 @@ function TodoList(props: ListTypeProps) {
                                            props.changStatus(t.id, newIsDoneValue, props.id)
                                        }}
                                 />
-                                <EditableSpan value={t.title} onChange={addTask} />
-                                <button onClick={onClickHandler}>x
-                                </button>
+                                <EditableSpan value={t.title} onChange={addTask}/>
+                                <IconButton onClick={onClickHandler}>
+                                    <Delete/>
+                                </IconButton>
                             </li>
                         })
                     }

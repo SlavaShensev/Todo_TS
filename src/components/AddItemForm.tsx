@@ -1,4 +1,5 @@
 import React, {ChangeEvent, useState} from 'react'
+import {Button} from "@material-ui/core";
 
 type AddItemFormType = {
     addItem: (title: string) => void
@@ -32,7 +33,13 @@ function AddItemForm(props: AddItemFormType) {
                    className={error ? 'error' : ''}
                    placeholder={'Add task'}
             />
-            <button onClick={addItem}>+</button>
+            {/*<Button onClick={addItem}>+</Button>*/}
+            <Button onClick={addItem}
+                    variant={"contained"}
+                    color={"primary"}
+            >
+                +
+            </Button>
             {error && <div className={'error_message'}>{error}</div>}
         </div>
     </div>
