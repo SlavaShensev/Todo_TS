@@ -94,7 +94,7 @@ function App() {
         }
     }
 
-    function changeTitleTodoList( todoListId: string, value: string) {
+    function changeTitleTodoList(todoListId: string, value: string) {
         const currentTodoList = todoLists.find((listItem) => listItem.id === todoListId)
         if (currentTodoList) {
             currentTodoList.title = value
@@ -114,6 +114,15 @@ function App() {
             ...tasksObj,
             [newTodoListId]: []
         })
+    }
+
+    function changeTasks(tasksId: string, todoListId: string, value: string) {
+        const currentListTask = tasksObj[todoListId]
+        const changingTask = currentListTask.find(t => t.id === tasksId)
+       if(changingTask) {
+           changingTask.title = value
+           setTasks({...tasksObj})
+       }
     }
 
     return (
@@ -156,6 +165,7 @@ function App() {
                                               filter={tl.filter}
                                               removeTodoList={removeTodoList}
                                               changeTitleTodoList={changeTitleTodoList}
+                                              changeTasks={changeTasks}
                                     />
                                 </Paper>
                             </Grid>
