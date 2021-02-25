@@ -35,7 +35,7 @@ function App() {
 
     const todoList1 = v1()
     const todoList2 = v1()
-
+//---------------------------------------------------- state
     let [todoLists, setTodoList] = useState<Array<TodoListType>>([
         {id: todoList1, title: 'What to learn', filter: 'all'},
         {id: todoList2, title: 'What to buy', filter: 'all',}
@@ -54,22 +54,7 @@ function App() {
             {id: v1(), title: 'Milk', isDone: true},
         ]
     })
-
-    function changeFilter(value: FilterValuesType, todoListId: string) {
-        let todolist = todoLists.find(tl => tl.id === todoListId)
-        if (todolist) {
-            todolist.filter = value
-            setTodoList([...todoLists])
-        }
-    }
-
-    function removeTodoList(todoListId: string) {
-        let filteredTodoList = todoLists.filter(tl => tl.id !== todoListId)
-        setTodoList(filteredTodoList)
-        delete tasksObj[todoListId]
-        setTasks({...tasksObj})
-    }
-
+//------------------------------------------------------
     function removeTask(id: string, todoListId: string) {
         let tasks = tasksObj[todoListId]
         let filteredTasks = tasks.filter(t => t.id !== id)
@@ -94,6 +79,30 @@ function App() {
         }
     }
 
+    function changeTaskItem(tasksId: string, todoListId: string, value: string) {
+        const currentListTask = tasksObj[todoListId]
+        const changingTask = currentListTask.find(t => t.id === tasksId)
+        if (changingTask) {
+            changingTask.title = value
+            setTasks({...tasksObj})
+        }
+    }
+    //-----------------------------------------------------
+    function changeFilter(value: FilterValuesType, todoListId: string) {
+        let todolist = todoLists.find(tl => tl.id === todoListId)
+        if (todolist) {
+            todolist.filter = value
+            setTodoList([...todoLists])
+        }
+    }
+
+    function removeTodoList(todoListId: string) {
+        let filteredTodoList = todoLists.filter(tl => tl.id !== todoListId)
+        setTodoList(filteredTodoList)
+        delete tasksObj[todoListId]
+        setTasks({...tasksObj})
+    }
+
     function changeTitleTodoList(todoListId: string, value: string) {
         const currentTodoList = todoLists.find((listItem) => listItem.id === todoListId)
         if (currentTodoList) {
@@ -115,22 +124,13 @@ function App() {
             [newTodoListId]: []
         })
     }
-
-    function changeTasks(tasksId: string, todoListId: string, value: string) {
-        const currentListTask = tasksObj[todoListId]
-        const changingTask = currentListTask.find(t => t.id === tasksId)
-       if(changingTask) {
-           changingTask.title = value
-           setTasks({...tasksObj})
-       }
-    }
-
+//-------------------------------------------------------------
     return (
         <div className='App'>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="Menu">
-                        <MenuIcon/>
+                        <MenuIcon  />
                     </IconButton>
                     <Typography variant='h5'>
                         News
@@ -165,7 +165,7 @@ function App() {
                                               filter={tl.filter}
                                               removeTodoList={removeTodoList}
                                               changeTitleTodoList={changeTitleTodoList}
-                                              changeTasks={changeTasks}
+                                              changeTasks={changeTaskItem}
                                     />
                                 </Paper>
                             </Grid>

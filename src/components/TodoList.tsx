@@ -23,7 +23,6 @@ function TodoList(props: ListTypeProps) {
     const addTask = (title: string) => {
         props.addTask(title, props.id)
     }
-
     const changeTitleTodoList = (title: string) => {
         props.changeTitleTodoList(props.id, title)
     }
@@ -48,8 +47,6 @@ function TodoList(props: ListTypeProps) {
                             const changeTask = (value: string) => {
                                 props.changeTasks(t.id, props.id, value)
                             }
-
-
                             return <div key={t.id} className={t.isDone ? 'is_done' : ''}>
                                 <Checkbox
                                     checked={t.isDone}

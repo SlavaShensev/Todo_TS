@@ -5,7 +5,6 @@ import {AddBox} from "@material-ui/icons";
 type AddItemFormType = {
     addItem: (title: string) => void
 }
-
 function AddItemForm(props: AddItemFormType) {
     let [title, setTitle] = useState('')
     let [error, setError] = useState<string | null>(null)
@@ -37,12 +36,10 @@ function AddItemForm(props: AddItemFormType) {
                 helperText={error}
                 variant={"outlined"}
             />
-
             <Button onClick={addItem}
                     color={"primary"}>
                 <AddBox/>
             </Button>
-
         </div>
     </div>
 
