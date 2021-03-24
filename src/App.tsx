@@ -161,7 +161,7 @@ function App() {
                                               removeTask={removeTask}
                                               changeFilter={changeFilter}
                                               addTask={addTask}
-                                              changStatus={changStatus}
+                                              changStatus={changStatus} // test git
                                               filter={tl.filter}
                                               removeTodoList={removeTodoList}
                                               changeTitleTodoList={changeTitleTodoList}
