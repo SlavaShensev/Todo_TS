@@ -1,4 +1,4 @@
-import React, {useState, ChangeEvent} from "react";
+import React, {ChangeEvent} from "react";
 import {ValueFilterType} from "../App";
 import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
@@ -37,16 +37,16 @@ const Todolist = (props: TodoListPropsType) => {
     const removeTodoList = () => {
         props.removeTodoList(props.id)
     }
+    const changeTitle = () => {
+        console.log('changed')
+    }
     return <div>
         <div>
             <h3>
-                {props.title}
-
+                <EditableSpan value={props.title} changeTitle={changeTitle}/>
                 <button onClick={removeTodoList}>x</button>
             </h3>
-
             <AddItemForm addItem={addTask}/>
-
         </div>
         <ul>
             {
@@ -67,7 +67,7 @@ const Todolist = (props: TodoListPropsType) => {
                                    checked={t.isDone}
                                    onChange={onChangeHandler}
                             />
-                            <span>{t.title}</span>
+                            <EditableSpan value={t.title} changeTitle={changeTitle}/>
                             <button onClick={onClickHandler}>
                                 x
                             </button>

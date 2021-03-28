@@ -102,6 +102,7 @@ const App = () => {
             ...tasks,
         })
     }
+
     return <div className='App'>
         <AddItemForm addItem={addTodoList}/>
         {
