@@ -1,7 +1,7 @@
 import React, {useState, ChangeEvent} from "react";
 import {ValueFilterType} from "../App";
 
-type TasksType = {
+export type TasksType = {
     id: string
     title: string
     isDone: boolean
@@ -16,6 +16,7 @@ type TodoListPropsType = {
     addTask: (title: string, todoListID: string) => void
     changeStatus: (id: string, isDone: boolean, todoListID: string) => void
     filter: string
+    removeTodoList: (id: string) => void
 }
 
 const Todolist = (props: TodoListPropsType) => {
@@ -49,7 +50,11 @@ const Todolist = (props: TodoListPropsType) => {
     }
     return <div>
         <div>
-            <h3> {props.title} </h3>
+            {props.title}
+            <button onClick={() => {
+                props.removeTodoList(props.id)
+            }}>x
+            </button>
         </div>
         <div>
             <input value={title}

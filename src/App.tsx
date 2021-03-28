@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import Todolist from "./component/ToDo";
+import Todolist, {TasksType} from "./component/ToDo";
 import './App.css';
 import {v1} from "uuid";
 
@@ -9,12 +9,16 @@ export type TodoList = {
     title: string
     filter: ValueFilterType
 }
+
+type TasksStateType = {
+    [key: string]: Array<TasksType>
+}
 const App = () => {
 
     const todoList1 = v1()
     const todoList2 = v1()
 
-    const [todoLists, setTodoList] = useState<Array<TodoList>>([
+    const [todoLists, setTodoLists] = useState<Array<TodoList>>([
         {
             id: todoList1,
             title: 'What to learn',
@@ -27,7 +31,7 @@ const App = () => {
         }
     ])
 
-    const [tasks, setTasks] = useState({
+    const [tasks, setTasks] = useState<TasksStateType>({
         [todoList1]: [
             {id: v1(), title: 'HTML&CSS', isDone: true},
             {id: v1(), title: 'JS', isDone: true},
@@ -42,7 +46,7 @@ const App = () => {
         const todoList = todoLists.find(tl => tl.id === todoListID)
         if (todoList) {
             todoList.filter = value
-            setTodoList([...todoLists])
+            setTodoLists([...todoLists])
         }
     }
     const removeTask = (id: string, todoListID: string) => {
@@ -78,6 +82,13 @@ const App = () => {
         //засетаем в стейт копию обьекта, что бы React отреагировал перерисовкой
         setTasks({...tasks})
     }
+    const removeTodoList = (id: string) => {
+        //засунем в ситейт список тудулистов, id - не равны, который нужно выкинуть
+        setTodoLists(todoLists.filter(tl => tl.id != id))
+        //удалим таски для этого тудулиста, где отдельно таски
+        delete tasks[id]
+        setTasks({...tasks})
+    }
     return <div className='App'>
         {
             todoLists.map(tl => {
@@ -100,6 +111,7 @@ const App = () => {
                                  addTask={addTask}
                                  changeStatus={changeStatus}
                                  filter={tl.filter}
+                                 removeTodoList={removeTodoList}
                 />
             })
         }
