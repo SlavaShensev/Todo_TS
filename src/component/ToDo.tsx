@@ -1,5 +1,7 @@
 import React, {useState, ChangeEvent} from "react";
 import {ValueFilterType} from "../App";
+import AddItemForm from "./AddItemForm";
+import EditableSpan from "./EditableSpan";
 
 export type TasksType = {
     id: string
@@ -20,24 +22,8 @@ type TodoListPropsType = {
 }
 
 const Todolist = (props: TodoListPropsType) => {
-    const [title, setTitle] = useState('')
-    const [error, setError] = useState<string | null>(null)
-    const addTask = () => {
-        if (title.trim() !== '') {
-            props.addTask(title, props.id)
-            setTitle('')
-        } else {
-            setError('Title is required')
-        }
-    }
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
-    }
-    const onKeyPressHandler = (e: React.KeyboardEvent) => {
-        setError(null)
-        if (e.key === 'Enter') {
-            addTask()
-        }
+    const addTask = (title: string) => {
+        props.addTask(title, props.id)
     }
     const onAllClickHandler = () => {
         props.changeFilter('all', props.id)
@@ -48,25 +34,19 @@ const Todolist = (props: TodoListPropsType) => {
     const onCompletedClickHandler = () => {
         props.changeFilter('completed', props.id)
     }
+    const removeTodoList = () => {
+        props.removeTodoList(props.id)
+    }
     return <div>
         <div>
-            {props.title}
-            <button onClick={() => {
-                props.removeTodoList(props.id)
-            }}>x
-            </button>
-        </div>
-        <div>
-            <input value={title}
-                   onChange={onChangeHandler}
-                   onKeyPress={onKeyPressHandler}
-            />
-            <button onClick={addTask}>
-                +
-            </button>
-            {error && <div className={'error-message'}>
-                {error}
-            </div>}
+            <h3>
+                {props.title}
+
+                <button onClick={removeTodoList}>x</button>
+            </h3>
+
+            <AddItemForm addItem={addTask}/>
+
         </div>
         <ul>
             {
@@ -79,6 +59,7 @@ const Todolist = (props: TodoListPropsType) => {
                         props.changeStatus(t.id, newIsDoneValue, props.id)
                     }
                     return (
+
                         <li key={t.id}
                             className={t.isDone ? 'is-done' : ''}
                         >
