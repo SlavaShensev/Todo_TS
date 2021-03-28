@@ -7,23 +7,23 @@ type TasksType = {
     isDone: boolean
 }
 
-type TodoListPropsTYpe = {
+type TodoListPropsType = {
     title: string
     id: string
     tasks: Array<TasksType>
-    removeTask: (id: string) => void
-    changeFilter: (value: ValueFilterType) => void
-    addTask: (title: string) => void
-    changeStatus: (id: string, isDone: boolean) => void
+    removeTask: (id: string, todoListID: string) => void
+    changeFilter: (value: ValueFilterType, todoListID: string) => void
+    addTask: (title: string, todoListID: string) => void
+    changeStatus: (id: string, isDone: boolean, todoListID: string) => void
     filter: string
 }
 
-const Todolist = (props: TodoListPropsTYpe) => {
+const Todolist = (props: TodoListPropsType) => {
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
     const addTask = () => {
         if (title.trim() !== '') {
-            props.addTask(title)
+            props.addTask(title, props.id)
             setTitle('')
         } else {
             setError('Title is required')
@@ -39,13 +39,13 @@ const Todolist = (props: TodoListPropsTYpe) => {
         }
     }
     const onAllClickHandler = () => {
-        props.changeFilter('all')
+        props.changeFilter('all', props.id)
     }
     const onActiveClickHandler = () => {
-        props.changeFilter('active')
+        props.changeFilter('active', props.id)
     }
     const onCompletedClickHandler = () => {
-        props.changeFilter('completed')
+        props.changeFilter('completed', props.id)
     }
     return <div>
         <div>
@@ -67,11 +67,11 @@ const Todolist = (props: TodoListPropsTYpe) => {
             {
                 props.tasks.map(t => {
                     const onClickHandler = () => {
-                        props.removeTask(t.id)
+                        props.removeTask(t.id, props.id)
                     }
                     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
                         const newIsDoneValue = e.currentTarget.checked
-                        props.changeStatus(t.id, newIsDoneValue)
+                        props.changeStatus(t.id, newIsDoneValue, props.id)
                     }
                     return (
                         <li key={t.id}
