@@ -22,6 +22,7 @@ export type TodoListType = {
 type TasksStateType = {
     [key: string]: Array<TasksType>
 }
+
 const App = () => {
     const todoList1 = v1()
     const todoList2 = v1()
@@ -105,7 +106,6 @@ const App = () => {
         }
         setTodoLists([newTodoList, ...todoLists])
         setTasks({
-
             [newTodoListID]: [],
             ...tasks,
         })
