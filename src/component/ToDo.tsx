@@ -22,6 +22,8 @@ type TodoListPropsType = {
     changeStatus: (id: string, isDone: boolean, todoListID: string) => void
     filter: string
     removeTodoList: (id: string) => void
+    changeTaskTitle: (id: string, newTitle: string, todoListId: string) => void
+    addTodoListTitle: (id: string, title: string) => void
 }
 
 const Todolist = (props: TodoListPropsType) => {
@@ -40,13 +42,11 @@ const Todolist = (props: TodoListPropsType) => {
     const removeTodoList = () => {
         props.removeTodoList(props.id)
     }
-    const changeTitle = () => {
-        console.log('changed')
-    }
+
     return <div>
         <div>
             <h3>
-                <EditableSpan value={props.title} changeTitle={changeTitle}/>
+                <EditableSpan value={props.title} changeTaskTitle={props.changeTaskTitle}/>
                 <IconButton onClick={removeTodoList}>
                     <Delete/>
                 </IconButton>
@@ -65,14 +65,14 @@ const Todolist = (props: TodoListPropsType) => {
                     }
                     return (
                         <div key={t.id}
-                            className={t.isDone ? 'is-done' : ''}
+                             className={t.isDone ? 'is-done' : ''}
                         >
                             <Checkbox
                                 checked={t.isDone}
                                 onChange={onChangeHandler}
                                 color={'primary'}
                             />
-                            <EditableSpan value={t.title} changeTitle={changeTitle}/>
+                            <EditableSpan value={t.title} changeTaskTitle={props.changeTaskTitle}/>
 
                             <IconButton onClick={onClickHandler}>
                                 <Delete/>

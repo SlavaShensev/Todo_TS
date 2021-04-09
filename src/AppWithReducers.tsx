@@ -66,7 +66,7 @@ const AppWithReducers = () => {
         const action = changeTaskStatusAC(todoListID, isDone, todoListID)
         dispatchToTasksReducer(action)
     }
-    const changeTaskTitle = (id: string, newTitle: string, todoListId: string) => {
+    const changeTaskTitle = (id: string, newTitle: string, todoListId: string) => {  ////------------------->  //todo
         const action = changeTaskTitleAC(id, newTitle, todoListId)
         dispatchToTasksReducer(action)
     }
@@ -79,7 +79,7 @@ const AppWithReducers = () => {
         dispatchToTasksReducer(action)
         dispatchToTodolistsReducer(action)
     }
-    const addTodoListTitle = (id: string, title: string) => {
+    const addTodoListTitle = (id: string, title: string) => { ///---------> //todo
         const action = changeTodolistTitleAC(id, title)
         dispatchToTodolistsReducer(action)
     }
@@ -131,6 +131,8 @@ const AppWithReducers = () => {
                                           changeStatus={changeStatus}
                                           filter={tl.filter}
                                           removeTodoList={removeTodoList}
+                                          changeTaskTitle={changeTaskTitle}
+                                          addTodoListTitle={addTodoListTitle}
                                 />
                             </Paper>
                         </Grid>

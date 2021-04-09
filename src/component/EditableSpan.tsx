@@ -3,7 +3,7 @@ import {TextField} from "@material-ui/core";
 
 type EditableSpanPropsType = {
     value: string
-    changeTitle: () => void
+    changeTaskTitle: (id: string, newTitle: string, todoListId: string) => void
 }
 
 const EditableSpan = (props: EditableSpanPropsType) => {
@@ -18,7 +18,7 @@ const EditableSpan = (props: EditableSpanPropsType) => {
 
     const activateViewMode = () => {
         setEditMode(false)
-        props.changeTitle()
+        props.changeTaskTitle()
 
     }
 
